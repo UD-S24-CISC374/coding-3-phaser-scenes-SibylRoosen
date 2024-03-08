@@ -4,6 +4,7 @@ export default class MainScene extends Phaser.Scene {
     private platforms?: Phaser.Physics.Arcade.StaticGroup;
     private cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
     private player?: Phaser.Physics.Arcade.Sprite;
+    private scoreText?: Phaser.GameObjects.Text;
 
     constructor() {
         super({ key: "MainScene" });
@@ -57,6 +58,16 @@ export default class MainScene extends Phaser.Scene {
 
         this.cursors = this.input.keyboard?.createCursorKeys();
 
+        this.scoreText = this.add.text(
+            16,
+            16,
+            "Press Space Bar To Change Background",
+            {
+                fontSize: "32px",
+                color: "#000",
+            }
+        );
+
         //this.scene.start("SceneTwo");
     }
 
@@ -68,7 +79,6 @@ export default class MainScene extends Phaser.Scene {
         if (this.cursors.left.isDown) {
             this.player?.setVelocityX(-160);
             this.player?.anims.play("left", true);
-            this.scene.start("SceneTwo");
         } else if (this.cursors.right.isDown) {
             this.player?.setVelocityX(160);
             this.player?.anims.play("right", true);
@@ -78,6 +88,9 @@ export default class MainScene extends Phaser.Scene {
         }
         if (this.cursors.up.isDown && this.player?.body?.touching.down) {
             this.player.setVelocityY(-330);
+        }
+        if (this.cursors.space.isDown) {
+            this.scene.start("SceneTwo");
         }
     }
 }

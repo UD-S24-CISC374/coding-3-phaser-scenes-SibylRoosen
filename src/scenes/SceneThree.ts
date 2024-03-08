@@ -4,6 +4,7 @@ export default class SceneThree extends Phaser.Scene {
     private platforms?: Phaser.Physics.Arcade.StaticGroup;
     private cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
     private player?: Phaser.Physics.Arcade.Sprite;
+    private scoreText?: Phaser.GameObjects.Text;
 
     constructor() {
         super({ key: "SceneThree" });
@@ -21,7 +22,9 @@ export default class SceneThree extends Phaser.Scene {
 
         this.platforms.create(600, 400, "ground");
         this.platforms.create(50, 250, "ground");
+        this.platforms.create(100, 500, "ground");
         this.platforms.create(750, 220, "ground");
+        this.platforms.create(300, 100, "ground");
 
         this.player = this.physics.add.sprite(100, 450, "dude");
         this.player.setBounce(0.2);
@@ -56,6 +59,16 @@ export default class SceneThree extends Phaser.Scene {
         this.physics.add.collider(this.player, this.platforms);
 
         this.cursors = this.input.keyboard?.createCursorKeys();
+
+        this.scoreText = this.add.text(
+            16,
+            16,
+            "Press Space Bar To Change Background",
+            {
+                fontSize: "32px",
+                color: "#000",
+            }
+        );
     }
 
     update() {
@@ -65,7 +78,6 @@ export default class SceneThree extends Phaser.Scene {
         if (this.cursors.left.isDown) {
             this.player?.setVelocityX(-160);
             this.player?.anims.play("left", true);
-            this.scene.start("SceneFour");
         } else if (this.cursors.right.isDown) {
             this.player?.setVelocityX(160);
             this.player?.anims.play("right", true);
@@ -75,6 +87,9 @@ export default class SceneThree extends Phaser.Scene {
         }
         if (this.cursors.up.isDown && this.player?.body?.touching.down) {
             this.player.setVelocityY(-330);
+        }
+        if (this.cursors.space.isDown) {
+            this.scene.start("SceneFour");
         }
     }
 }
