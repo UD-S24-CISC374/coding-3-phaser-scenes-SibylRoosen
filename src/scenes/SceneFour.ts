@@ -1,16 +1,17 @@
 import Phaser from "phaser";
 
-export default class MainScene extends Phaser.Scene {
+export default class SceneFour extends Phaser.Scene {
     private platforms?: Phaser.Physics.Arcade.StaticGroup;
     private cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
     private player?: Phaser.Physics.Arcade.Sprite;
 
     constructor() {
-        super({ key: "MainScene" });
+        super({ key: "SceneFour" });
     }
 
     create() {
-        this.add.image(400, 300, "grand1");
+        this.add.image(400, 300, "grand4");
+
         this.platforms = this.physics.add.staticGroup();
         const ground = this.platforms.create(
             400,
@@ -56,19 +57,16 @@ export default class MainScene extends Phaser.Scene {
         this.physics.add.collider(this.player, this.platforms);
 
         this.cursors = this.input.keyboard?.createCursorKeys();
-
-        //this.scene.start("SceneTwo");
     }
 
     update() {
-        //this.fpsText.update();
         if (!this.cursors) {
             return;
         }
         if (this.cursors.left.isDown) {
             this.player?.setVelocityX(-160);
             this.player?.anims.play("left", true);
-            this.scene.start("SceneTwo");
+            this.scene.start("MainScene");
         } else if (this.cursors.right.isDown) {
             this.player?.setVelocityX(160);
             this.player?.anims.play("right", true);
