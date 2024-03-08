@@ -1,17 +1,18 @@
 import Phaser from "phaser";
 
-export default class MainScene extends Phaser.Scene {
+export default class SceneFour extends Phaser.Scene {
     private platforms?: Phaser.Physics.Arcade.StaticGroup;
     private cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
     private player?: Phaser.Physics.Arcade.Sprite;
     private scoreText?: Phaser.GameObjects.Text;
 
     constructor() {
-        super({ key: "MainScene" });
+        super({ key: "SceneFour" });
     }
 
     create() {
-        this.add.image(400, 300, "grand1");
+        this.add.image(400, 300, "grand4");
+
         this.platforms = this.physics.add.staticGroup();
         const ground = this.platforms.create(
             400,
@@ -21,8 +22,11 @@ export default class MainScene extends Phaser.Scene {
         ground.setScale(2).refreshBody();
 
         this.platforms.create(600, 400, "ground");
-        this.platforms.create(50, 250, "ground");
-        this.platforms.create(750, 220, "ground");
+        this.platforms.create(300, 250, "ground");
+        this.platforms.create(750, 500, "ground");
+        this.platforms.create(220, 50, "ground");
+        this.platforms.create(100, 350, "ground");
+        this.platforms.create(600, 150, "ground");
 
         this.player = this.physics.add.sprite(100, 450, "dude");
         this.player.setBounce(0.2);
@@ -67,12 +71,9 @@ export default class MainScene extends Phaser.Scene {
                 color: "#000",
             }
         );
-
-        //this.scene.start("SceneTwo");
     }
 
     update() {
-        //this.fpsText.update();
         if (!this.cursors) {
             return;
         }
@@ -90,7 +91,7 @@ export default class MainScene extends Phaser.Scene {
             this.player.setVelocityY(-330);
         }
         if (this.cursors.space.isDown) {
-            this.scene.start("SceneTwo");
+            this.scene.start("MainScene");
         }
     }
 }
